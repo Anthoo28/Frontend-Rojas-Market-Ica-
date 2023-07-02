@@ -1,0 +1,75 @@
+
+
+<div class="ui-g">
+    <p-toast></p-toast>
+    <p-panel  header="Proveedores"  [style]="{ width: '70%', margin: '0 auto' } "
+    >
+      <div style="margin-bottom: 20px">
+        <p-menubar [model]="items"></p-menubar >
+      </div>
+      <p-table [value]="proveedores" [columns]="cols" [paginator]="true" [rows]="10" >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">{{ col.header }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-proveedor let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              <ng-container *ngIf="col.field">
+                {{ proveedor[col.field] }}
+              </ng-container>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-panel>
+  
+  
+  <p-dialog header="Nuevo proveedor" [responsive]="true" [style]="{width:'400px'}" [(visible)]="displaySaveDialog" [modal]="true">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="ruc_proveedor">RUC</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="ruc_proveedor" [(ngModel)]="proveedor.ruc_proveedor"  style="width: 100%"/>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="nombre_proveedor">Nombre</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="nombre_proveedor" [(ngModel)]="proveedor.nombre_proveedor"  style="width: 100%" />
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="descripcion_proveedor">Descripcion</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="descripcion_proveedor" [(ngModel)]="proveedor.descripcion_proveedor"  style="width: 100%"/>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="telefono_proveedor">Telefono</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="telefono_proveedor" [(ngModel)]="proveedor.telefono_proveedor"  style="width: 100%" />
+        </div>
+      </div>
+    </div>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+    
+    
+  </div>
+  
+  <footer><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></footer>
+  

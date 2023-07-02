@@ -1,0 +1,104 @@
+
+<div class="ui-g">
+    <p-toast></p-toast>
+    <p-panel  header="Productos"  [style]="{ width: '70%', margin: '0 auto' } "
+    >
+      <div style="margin-bottom: 20px">
+        <p-menubar [model]="items"></p-menubar >
+      </div>
+      <p-table [value]="productos"[columns]="cols" [paginator]="true" [rows]="10" >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">{{ col.header }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-producto let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              <ng-container *ngIf="col.field !== 'proveedor.nombre_proveedor'">
+                {{ producto[col.field] }}
+              </ng-container>
+              <ng-container *ngIf="col.field === 'proveedor.nombre_proveedor'">
+                {{ producto.proveedor?.nombre_proveedor }}
+              </ng-container>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-panel>
+  
+  
+  <p-dialog header="Nuevo producto" [responsive]="true" [style]="{width:'700px', height:'1000px'}" [(visible)]="displaySaveDialog" [modal]="true">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="id_proveedor">ID Proveedor</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="id_proveedor" [(ngModel)]="producto.proveedor.id_proveedor"  style="width: 100%"/>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="nombre_producto">Nombre</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="nombre_producto" [(ngModel)]="producto.nombre_producto"  style="width: 100%" />
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="descripcion_producto">Descripcion</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="descripcion_producto" [(ngModel)]="producto.descripcion_producto"  style="width: 100%"/>
+        </div>
+      </div>  
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="cantidad_producto">Cantidad</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="cantidad_producto" [(ngModel)]="producto.cantidad_producto"   style="width: 100%"/>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="fecha_vencimiento">Fecha de Vencimiento</label>
+        </div>
+        <div class="ui-g-8">
+            <p-calendar id="fecha_vencimiento" [(ngModel)]="producto.fecha_vencimiento" [style.width]="'200px'" [style.height]="'200px'"></p-calendar>
+
+        </div>
+      </div>
+      
+      <br><br>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="precio_ingreso_producto">Precio de Ingreso</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="precio_ingreso_producto" [(ngModel)]="producto.precio_ingreso_producto"   style="width: 100%"/>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="stock_minimo_producto">Stock Minimo</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="stock_minimo_producto" [(ngModel)]="producto.stock_minimo_producto"   style="width: 100%"/>
+        </div>
+      </div>
+    </div>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+    
+    
+  </div>
+  
+  <footer><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></footer>
+  

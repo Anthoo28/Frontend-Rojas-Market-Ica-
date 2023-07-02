@@ -1,0 +1,74 @@
+
+<div class="ui-g">
+    <p-toast></p-toast>
+    <p-panel  header="Clientes"  [style]="{ width: '70%', margin: '0 auto' } "
+    >
+      <div style="margin-bottom: 20px">
+        <p-menubar [model]="items"></p-menubar >
+      </div>
+      <p-table [value]="clientes" [columns]="cols" [paginator]="true" [rows]="10" >
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">{{ col.header }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cliente let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              <ng-container>
+                {{ cliente[col.field] }}
+              </ng-container>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-panel>
+  
+  
+  <p-dialog header="Nuevo Cliente" [responsive]="true" [style]="{width:'400px'}" [(visible)]="displaySaveDialog" [modal]="true">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="id_cliente">DNI</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="id_cliente" [(ngModel)]="cliente.id_cliente"  style="width: 100%"/>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="nombre_cliente">Nombres Completo</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="nombre_cliente" [(ngModel)]="cliente.nombre_cliente"  style="width: 100%" />
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="correo_cliente">Correo</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="correo_cliente" [(ngModel)]="cliente.correo_cliente"  style="width: 100%"/>
+        </div>
+      </div>
+      <div class="ui-g-12">
+        <div class="ui-g-4">
+          <label for="telefono_cliente">Telefono</label>
+        </div>
+        <div class="ui-g-8">
+          <input pInputText id="telefono_cliente" [(ngModel)]="cliente.telefono_cliente"  style="width: 100%" />
+        </div>
+      </div>
+    </div>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"></button>
+      </div>
+    </p-footer>
+  </p-dialog>
+    
+    
+  </div>
+  
+  <footer><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></footer>
+  
