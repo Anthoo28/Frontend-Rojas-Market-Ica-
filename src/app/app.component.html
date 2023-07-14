@@ -1,7 +1,9 @@
-
-<a routerLink="/empleado">Empleado</a>
-<a routerLink="/cliente">Cliente</a>
-<a routerLink="/proveedor">Proveedor</a>
-<a routerLink="/producto">Producto</a>
+<header>
+  <div class="card">
+    <div class="card menu-container">
+      <p-tabMenu [model]="items"></p-tabMenu>
+    </div>
+  </div>
+</header>
 
 <router-outlet></router-outlet>

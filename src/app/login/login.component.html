@@ -1,0 +1,30 @@
+<div class="contenedor-formulario contenedor">
+  <img src="./assets/rojas (1).png">
+  <form class="formulario" [formGroup]="form" (ngSubmit)="formSubmit()">
+    <div class="texto-title">
+      <ul class="login-reg-txt">
+        <li><a routerLink="/principal/login" class="active">Iniciar sesión</a></li>
+        <li><a routerLink="/principal/registro" class="des">Crear cuenta</a></li>
+      </ul>
+      <div class="login-reg-line">
+        <hr class="cla active">
+        <hr class="cla des">
+      </div>
+    </div>
+    <div class="texto-formulario">
+      <h2>Bienvenido</h2>
+    </div>
+    <div class="input mb-4">
+      <input type="text" pInputText placeholder="Digite su nombre de usuario" autocomplete="off" formControlName="correo">
+      <small>El nombre ingresado debe ser válido</small>
+    </div>
+    <div class="input mb-4">
+      <input type="password" pPassword placeholder="Digite su contraseña" autocomplete="off" formControlName="contrasena">
+      <small>La contraseña debe ser válida</small>
+    </div>
+    <div class="input d-flex">
+      <button pButton type="submit" class="full-width me-5" label="Iniciar Sesión" ></button>
+      <button pButton type="reset" class="full-width" label="Limpiar"></button>
+    </div>
+  </form>
+</div>

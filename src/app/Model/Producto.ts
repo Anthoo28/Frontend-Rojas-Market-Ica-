@@ -1,6 +1,6 @@
 export class Producto{
     constructor(
-
+public id_producto:number|null,
 public proveedor:{
     id_proveedor:number|null
 },

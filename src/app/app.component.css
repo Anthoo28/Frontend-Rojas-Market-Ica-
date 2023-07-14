@@ -1,0 +1,12 @@
+.menu-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  body {
+    background-color: rgba(0, 128, 128, 0.2); /* Color jade con opacidad */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    background-repeat: no-repeat; /* Evita la repetición de la imagen */
+    background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
+  }
+  

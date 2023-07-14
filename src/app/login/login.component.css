@@ -1,0 +1,151 @@
+
+.formulario {
+  padding: 100px;
+  width: 100%;
+}
+.texto-formulario h2,
+.input label,
+.password-olvidada a,
+.texto-formulario p {
+  color: rgb(0, 0, 0);
+}
+
+.texto-formulario h2 {
+  font-size: 40px;
+  text-align: left;
+  margin: 20px 0px;
+}
+.texto-formulario p {
+  font-size: 22px;
+  text-align: center;
+}
+
+.contenedor-formulario {
+  height: 100vh;
+}
+
+.login-reg-txt,
+.login-reg-line {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.login-reg-txt li a {
+  margin: 30px;
+}
+.login-reg-txt li .active {
+  font-family: "PT Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 19px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  list-style: none;
+  color: #8711c1;
+}
+.login-reg-txt li {
+  list-style: none;
+  margin: 10px;
+}
+.active {
+  border-color: #8711c1;
+}
+.login-reg-txt li .des {
+  font-family: "PT Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 19px;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  list-style: none;
+  color: rgb(0, 0, 0);
+}
+
+.cla {
+  width: 30%;
+}
+
+.centrado {
+  text-align: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+@media (max-width: 1220px) {
+  .menu {
+    width: 100%;
+  }
+
+  .menu ul {
+    height: 0px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .menu ul.active {
+    border-top: 1px solid var(--color-dark-variant);
+    margin: 16px;
+    height: auto;
+    transition: all 0.2s;
+  }
+
+  .header-all-content {
+    justify-content: space-between;
+    padding: 5px;
+  }
+
+  .menu nav ul li {
+    display: block;
+    line-height: 43px;
+  }
+
+  .icon i {
+    display: block;
+    color: var(--color-white);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .cuenta.menu ul {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 1200px) {
+  .contenedor img {
+    background-position: center;
+  }
+}
+
+@media (max-width: 966px) {
+  .row-footer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .contenedor img {
+    height: auto;
+    background-position: right;
+  }
+
+  .contenedor-formulario {
+    display: flex;
+  }
+}
+
+@media (max-width: 450px) {
+  .row-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .contain-logo-buscador {
+    width: 265px;
+  }
+}

@@ -1,0 +1,14 @@
+:host ::ng-deep .ui-messages-error {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .custom-button {
+    margin-right: 10px;
+  }
+  
+.sort-icon {
+  font-size: 0.8rem;
+  margin-left: 0.3rem;
+}

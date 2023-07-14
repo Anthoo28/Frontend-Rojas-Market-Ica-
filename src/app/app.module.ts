@@ -19,7 +19,13 @@ import { ProveedorComponent } from './proveedor/proveedor.component';
 import { ProductoComponent } from './producto/producto.component';
 import { CalendarModule } from 'primeng/calendar';
 import { MenuModule } from 'primeng/menu';
-
+import { LoginComponent } from './login/login.component';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { DropdownModule } from 'primeng/dropdown';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PasswordModule } from 'primeng/password';
+import { TagModule } from 'primeng/tag';
+import { VentaComponent } from './venta/venta.component'
 
 
 @NgModule({
@@ -28,13 +34,21 @@ import { MenuModule } from 'primeng/menu';
     EmpleadoComponent,
     ClienteComponent,
     ProveedorComponent,
-    ProductoComponent
+    ProductoComponent,
+    LoginComponent,
+    VentaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    TagModule,
     MenuModule,
+    TableModule,
+    ReactiveFormsModule,
+    DropdownModule,
+    TabMenuModule,
+    PasswordModule,
     CalendarModule,
     TableModule,
     FormsModule,

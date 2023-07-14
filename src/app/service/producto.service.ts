@@ -19,7 +19,19 @@ export class ProductoService {
     save(producto: Producto): Observable<any> {
       let headers = new HttpHeaders();
       headers = headers.set('Content-Type', 'application/json');
+     
       return this.http.post(this.baseUrl + "/save", JSON.stringify(producto), { headers: headers });
-    }
+  }
+  
+  update(id:number ,producto:Producto): Observable<any> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    return this.http.put(this.baseUrl + "/update/" + id, JSON.stringify(producto), { headers: headers });
+  }
+  
+  
+  delete(id: number): Observable<any> {
+    return this.http.delete(this.baseUrl + "/eliminar/"+id);
+  }
   }
   

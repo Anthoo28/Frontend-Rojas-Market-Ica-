@@ -1,8 +1,9 @@
 export class Proveedor{
     constructor(
-        public ruc_proveedor:string,
-        public nombre_proveedor:string,
-       public descripcion_proveedor:string,
-       public telefono_proveedor:string
+        public id_proveedor:number|null,
+        public ruc_proveedor:string|null,
+        public nombre_proveedor:string|null,
+       public descripcion_proveedor:string|null,
+       public telefono_proveedor:string|null
     ){}
 }

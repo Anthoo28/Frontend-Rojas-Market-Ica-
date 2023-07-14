@@ -1,84 +1,207 @@
-
+<br><br><br><br>
 <div class="ui-g">
   <p-toast></p-toast>
-  <p-panel  header="Empleados"  [style]="{ width: '70%', margin: '0 auto' } "
-  >
+  <p-panel header="Empleados" [style]="{ width: '70%', margin: '0 auto' }">
     <div style="margin-bottom: 20px">
-      <p-menubar [model]="items"></p-menubar >
+      <p-menubar [model]="items"></p-menubar>
     </div>
-    <p-table [value]="empleados" [columns]="cols" [paginator]="true" [rows]="10" >
-      <ng-template pTemplate="header" let-columns>
-        <tr>
-          <th *ngFor="let col of columns">{{ col.header }}</th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-empleado let-columns="columns">
-        <tr>
-          <td *ngFor="let col of columns">
-            <ng-container *ngIf="col.field !== 'cargo.nombre_cargo'">
-              {{ empleado[col.field] }}
-            </ng-container>
-            <ng-container *ngIf="col.field === 'cargo.nombre_cargo'">
-              {{ empleado.cargo?.nombre_cargo }}
-            </ng-container>
+<p-table
+  [value]="empleados"
+  [columns]="cols"
+  selectionMode="single"
+  dataKey="id_empleado"
+  [rows]="10"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{ col.header }}
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-empleado let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns">
+        <ng-container *ngIf="col.field !== 'contrasena_empleado'">
+          {{ empleado[col.field] }}
+        </ng-container>
+        <ng-container *ngIf="col.field === 'contrasena_empleado'">
+          <span *ngIf="!empleado.showPassword">********</span>
+          <span *ngIf="empleado.showPassword">{{ empleado[col.field] }}</span>
+        </ng-container>
+      </td>
+      <td>
+        
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              (click)="editarEmpleado(empleado)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-element p-button-rounded p-button-warning p-button p-component p-button-icon-only"
+              (click)="deleteEmpleado(empleado.id_empleado)"
+            ></button>
           </td>
         </tr>
       </ng-template>
     </p-table>
   </p-panel>
 
+  <p-dialog header="Empleado" [(visible)]="displaySaveDialog">
+    <form [formGroup]="empleadoForm">
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="cargo">Cargo</label>
+          </div>
+          <div class="ui-g-8">
+            <p-dropdown
+              [options]="opcionesCargo"
+              id="cargo"
+              formControlName="cargo"
+              placeholder="Seleccionar cargo"
+              [style]="{ width: '100%' }"
+            ></p-dropdown>
 
-<p-dialog header="Nuevo Empleado" [responsive]="true" [style]="{width:'400px'}" [(visible)]="displaySaveDialog" [modal]="true">
-  <div class="ui-g ui-fluid">
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="id_cargo">ID Cargo</label>
+            <div
+              *ngIf="
+                empleadoForm.controls.cargo.invalid &&
+                empleadoForm.controls.cargo.touched
+              "
+              class="ui-message ui-messages-error"
+            >
+              Cargo es requerido.
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="fulldate_empleado">Nombres Completos</label>
+          </div>
+          <div class="ui-g-8">
+            <input
+              pInputText
+              id="fulldate_empleado"
+              formControlName="fulldate_empleado"
+              style="width: 100%"
+              [class.ng-invalid]="
+                empleadoForm.controls['fulldate_empleado'].invalid &&
+                empleadoForm.controls['fulldate_empleado'].touched
+              "
+            />
+            <div
+              *ngIf="
+                empleadoForm.controls.fulldate_empleado.invalid &&
+                empleadoForm.controls.fulldate_empleado.touched
+              "
+              class="ui-message ui-messages-error"
+            >
+              Nombre completo es requerido.
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="edad_empleado">Edad</label>
+          </div>
+          <div class="ui-g-8">
+            <input
+              pInputText
+              id="edad_empleado"
+              formControlName="edad_empleado"
+              style="width: 100%"
+              [class.ng-invalid]="
+                empleadoForm.controls['edad_empleado'].invalid &&
+                empleadoForm.controls['edad_empleado'].touched
+              "
+            />
+            <div
+              *ngIf="
+                empleadoForm.controls.edad_empleado.invalid &&
+                empleadoForm.controls.edad_empleado.touched
+              "
+              class="ui-message ui-messages-error"
+            >
+              Edad es requerida.
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="correo_empleado">Correo Electrónico</label>
+          </div>
+          <div class="ui-g-8">
+            <input
+              pInputText
+              id="correo_empleado"
+              formControlName="correo_empleado"
+              style="width: 100%"
+              [class.ng-invalid]="
+                empleadoForm.controls['correo_empleado'].invalid &&
+                empleadoForm.controls['correo_empleado'].touched
+              "
+            />
+            <div
+              *ngIf="
+                empleadoForm.controls.correo_empleado.invalid &&
+                empleadoForm.controls.correo_empleado.touched
+              "
+              class="ui-message ui-messages-error"
+            >
+              Correo electrónico es requerido.
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12">
+          <div class="ui-g-4">
+            <label for="contrasena_empleado">Contraseña</label>
+          </div>
+          <div class="ui-g-8">
+            <p-password
+              pPassword
+              id="contrasena_empleado"
+              [class.ng-invalid]="
+                empleadoForm.controls['contrasena_empleado'].invalid &&
+                empleadoForm.controls['contrasena_empleado'].touched
+              "
+              formControlName="contrasena_empleado"
+              class="ui-password"
+              [feedback]="false"
+              required
+            ></p-password>
+            <div
+              *ngIf="
+                empleadoForm.controls.contrasena_empleado.invalid &&
+                empleadoForm.controls.contrasena_empleado.touched
+              "
+              class="ui-message ui-messages-error"
+            >
+              Contraseña es requerida.
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="ui-g-8">
-        <input pInputText id="id_cargo" [(ngModel)]="empleado.cargo.id_cargo"  style="width: 100%"/>
-      </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="fulldate_empleado">Nombres Completo</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="fulldate_empleado" [(ngModel)]="empleado.fulldate_empleado"  style="width: 100%" />
-      </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="edad_empleado">Edad</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="edad_empleado" [(ngModel)]="empleado.edad_empleado"  style="width: 100%"/>
-      </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="correo_empleado">Correo Electrónico</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="correo_empleado" [(ngModel)]="empleado.correo_empleado"  style="width: 100%" />
-      </div>
-    </div>
-    <div class="ui-g-12">
-      <div class="ui-g-4">
-        <label for="contrasena_empleado">Contraseña</label>
-      </div>
-      <div class="ui-g-8">
-        <input pInputText id="contrasena_empleado" [(ngModel)]="empleado.contrasena_empleado"   style="width: 100%"/>
-      </div>
-    </div>
-  </div>
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-helper-clearfix">
-        <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"></button>
-    </div>
-  </p-footer>
-</p-dialog>
-  
-  
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+          <button
+            type="button"
+            pButton
+            icon="fa fa-check"
+            (click)="saveOrUpdate()"
+            label="{{ isNewEmpleado ? 'Guardar' : 'Actualizar' }}"
+            [disabled]="empleadoForm.invalid"
+          ></button>
+        </div>
+      </p-footer>
+    </form>
+  </p-dialog>
 </div>
 
 <footer><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></footer>

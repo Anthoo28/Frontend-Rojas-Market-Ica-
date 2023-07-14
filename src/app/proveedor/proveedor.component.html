@@ -1,75 +1,140 @@
-
-
+<br><br><br><br>
 <div class="ui-g">
-    <p-toast></p-toast>
-    <p-panel  header="Proveedores"  [style]="{ width: '70%', margin: '0 auto' } "
-    >
-      <div style="margin-bottom: 20px">
-        <p-menubar [model]="items"></p-menubar >
-      </div>
-      <p-table [value]="proveedores" [columns]="cols" [paginator]="true" [rows]="10" >
-        <ng-template pTemplate="header" let-columns>
-          <tr>
-            <th *ngFor="let col of columns">{{ col.header }}</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-proveedor let-columns="columns">
-          <tr>
-            <td *ngFor="let col of columns">
-              <ng-container *ngIf="col.field">
-                {{ proveedor[col.field] }}
-              </ng-container>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-panel>
-  
-  
-  <p-dialog header="Nuevo proveedor" [responsive]="true" [style]="{width:'400px'}" [(visible)]="displaySaveDialog" [modal]="true">
-    <div class="ui-g ui-fluid">
+  <p-toast></p-toast>
+ 
+
+  <p-dialog header="Proveedor" [(visible)]="displaySaveDialog">
+    <form [formGroup]="proveedorForm">
       <div class="ui-g-12">
         <div class="ui-g-4">
           <label for="ruc_proveedor">RUC</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="ruc_proveedor" [(ngModel)]="proveedor.ruc_proveedor"  style="width: 100%"/>
+          <input
+            pInputText
+            id="ruc_proveedor"
+            formControlName="ruc_proveedor"
+            style="width: 100%"
+            [class.ng-invalid]="
+              proveedorForm.controls['ruc_proveedor'].invalid &&
+              proveedorForm.controls['ruc_proveedor'].touched
+            "
+            maxlength="11"
+          />
+          <div
+            *ngIf="
+              proveedorForm.controls['ruc_proveedor'].invalid &&
+              proveedorForm.controls['ruc_proveedor'].touched
+            "
+            class="ui-message ui-messages-error"
+          >
+            <span class="ui-message-text"
+              >El RUC debe ser un número entero de 11 dígitos.</span
+            >
+          </div>
         </div>
       </div>
+
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="nombre_proveedor">Nombre</label>
+          <label for="nombre_proveedor">Nombre Proveedor</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="nombre_proveedor" [(ngModel)]="proveedor.nombre_proveedor"  style="width: 100%" />
+          <input
+            pInputText
+            id="nombre_proveedor"
+            formControlName="nombre_proveedor"
+            style="width: 100%"
+            [class.ng-invalid]="
+              proveedorForm.controls['nombre_proveedor'].invalid &&
+              proveedorForm.controls['nombre_proveedor'].touched
+            "
+          />
+          <div
+            *ngIf="
+            proveedorForm.controls['nombre_proveedor'].invalid &&
+            proveedorForm.controls['nombre_proveedor'].touched
+            "
+            class="ui-message ui-messages-error"
+          >
+            <span class="ui-message-text"
+              >El nombre debe contener solo letras.</span
+            >
+          </div>
         </div>
       </div>
+
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="descripcion_proveedor">Descripcion</label>
+          <label for="descripcion_proveedor">Correo</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="descripcion_proveedor" [(ngModel)]="proveedor.descripcion_proveedor"  style="width: 100%"/>
+          <input
+            pInputText
+            id="descripcion_proveedor"
+            formControlName="descripcion_proveedor"
+            style="width: 100%"
+            [class.ng-invalid]="
+            proveedorForm.controls['descripcion_proveedor'].invalid &&
+            proveedorForm.controls['descripcion_proveedor'].touched
+            "
+          />
+          <div
+            *ngIf="
+            proveedorForm.controls['descripcion_proveedor'].invalid &&
+            proveedorForm.controls['descripcion_proveedor'].touched
+            "
+            class="ui-message ui-messages-error"
+          >
+            <span class="ui-message-text"
+              >La descripcion debe tener un formato válido.</span
+            >
+          </div>
         </div>
       </div>
+
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="telefono_proveedor">Telefono</label>
+          <label for="telefono_proveedor">Teléfono</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="telefono_proveedor" [(ngModel)]="proveedor.telefono_proveedor"  style="width: 100%" />
+          <input
+            pInputText
+            id="telefono_proveedor"
+            formControlName="telefono_proveedor"
+            style="width: 100%"
+            [class.ng-invalid]="
+            proveedorForm.controls['telefono_proveedor'].invalid &&
+            proveedorForm.controls['telefono_proveedor'].touched
+            "
+            maxlength="9"
+          />
+          <div
+            *ngIf="
+            proveedorForm.controls['telefono_proveedor'].invalid &&
+            proveedorForm.controls['telefono_proveedor'].touched
+            "
+            class="ui-message ui-messages-error"
+          >
+            <span class="ui-message-text"
+              >El teléfono debe ser un número entero de 9 dígitos.</span
+            >
+          </div>
         </div>
       </div>
-    </div>
-    <p-footer>
-      <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"></button>
+      <br />
+      <div class="ui-g-12">
+        <button
+          pButton
+          type="button"
+          label="{{ isNewProveedor ? 'Guardar' : 'Actualizar' }}"
+          icon="pi pi-check"
+          (click)="saveOrUpdate()"
+          [disabled]="proveedorForm.invalid"
+        ></button>
       </div>
-    </p-footer>
+    </form>
   </p-dialog>
-    
-    
-  </div>
-  
-  <footer><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></footer>
-  
+</div>
+
+<footer><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></footer>

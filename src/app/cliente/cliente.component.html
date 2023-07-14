@@ -1,74 +1,184 @@
-
+<br><br><br><br>
 <div class="ui-g">
-    <p-toast></p-toast>
-    <p-panel  header="Clientes"  [style]="{ width: '70%', margin: '0 auto' } "
+  <p-toast></p-toast>
+  <p-panel header="Clientes" [style]="{ width: '70%', margin: '0 auto' }">
+    <div style="margin-bottom: 20px">
+      <p-menubar [model]="items"></p-menubar>
+    </div>
+    <p-table
+      [value]="clientes"
+      [columns]="cols"
+      selectionMode="single"
+      [(selection)]="selectCliente"
+      dataKey="id_cliente"
+      [rows]="10"
     >
-      <div style="margin-bottom: 20px">
-        <p-menubar [model]="items"></p-menubar >
-      </div>
-      <p-table [value]="clientes" [columns]="cols" [paginator]="true" [rows]="10" >
-        <ng-template pTemplate="header" let-columns>
-          <tr>
-            <th *ngFor="let col of columns">{{ col.header }}</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-cliente let-columns="columns">
-          <tr>
-            <td *ngFor="let col of columns">
-              <ng-container>
-                {{ cliente[col.field] }}
-              </ng-container>
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </p-panel>
-  
-  
-  <p-dialog header="Nuevo Cliente" [responsive]="true" [style]="{width:'400px'}" [(visible)]="displaySaveDialog" [modal]="true">
-    <div class="ui-g ui-fluid">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-cliente let-columns="columns">
+        <tr [pSelectableRow]="cliente">
+          <td *ngFor="let col of columns">
+            {{ cliente[col.field] }}
+          </td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              (click)="editarCliente(cliente)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-element p-button-rounded p-button-warning p-button p-component p-button-icon-only"
+              (click)="deleteCliente(cliente.id_cliente)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+
+  <p-dialog header="Cliente" [(visible)]="displaySaveDialog">
+    <form [formGroup]="clienteForm">
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="id_cliente">DNI</label>
+          <label for="dni_cliente">DNI</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="id_cliente" [(ngModel)]="cliente.id_cliente"  style="width: 100%"/>
+          <input
+            pInputText
+            id="dni_cliente"
+            formControlName="dni_cliente"
+            style="width: 100%"
+            [class.ng-invalid]="
+              clienteForm.controls['dni_cliente'].invalid &&
+              clienteForm.controls['dni_cliente'].touched
+            "
+            maxlength="8"
+          />
+          <div
+            *ngIf="
+              clienteForm.controls['dni_cliente'].invalid &&
+              clienteForm.controls['dni_cliente'].touched
+            "
+            class="ui-message ui-messages-error"
+          >
+            <span class="ui-message-text"
+              >El DNI debe ser un número entero de 8 dígitos.</span
+            >
+          </div>
         </div>
       </div>
+
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="nombre_cliente">Nombres Completo</label>
+          <label for="nombre_cliente">Nombres Completos</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="nombre_cliente" [(ngModel)]="cliente.nombre_cliente"  style="width: 100%" />
+          <input
+            pInputText
+            id="nombre_cliente"
+            formControlName="nombre_cliente"
+            style="width: 100%"
+            [class.ng-invalid]="
+              clienteForm.controls['nombre_cliente'].invalid &&
+              clienteForm.controls['nombre_cliente'].touched
+            "
+          />
+          <div
+            *ngIf="
+              clienteForm.controls['nombre_cliente'].invalid &&
+              clienteForm.controls['nombre_cliente'].touched
+            "
+            class="ui-message ui-messages-error"
+          >
+            <span class="ui-message-text"
+              >El nombre debe contener solo letras.</span
+            >
+          </div>
         </div>
       </div>
+
       <div class="ui-g-12">
         <div class="ui-g-4">
           <label for="correo_cliente">Correo</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="correo_cliente" [(ngModel)]="cliente.correo_cliente"  style="width: 100%"/>
+          <input
+            pInputText
+            id="correo_cliente"
+            formControlName="correo_cliente"
+            style="width: 100%"
+            [class.ng-invalid]="
+              clienteForm.controls['correo_cliente'].invalid &&
+              clienteForm.controls['correo_cliente'].touched
+            "
+          />
+          <div
+            *ngIf="
+              clienteForm.controls['correo_cliente'].invalid &&
+              clienteForm.controls['correo_cliente'].touched
+            "
+            class="ui-message ui-messages-error"
+          >
+            <span class="ui-message-text"
+              >El correo debe tener un formato válido.</span
+            >
+          </div>
         </div>
       </div>
+
       <div class="ui-g-12">
         <div class="ui-g-4">
-          <label for="telefono_cliente">Telefono</label>
+          <label for="telefono_cliente">Teléfono</label>
         </div>
         <div class="ui-g-8">
-          <input pInputText id="telefono_cliente" [(ngModel)]="cliente.telefono_cliente"  style="width: 100%" />
+          <input
+            pInputText
+            id="telefono_cliente"
+            formControlName="telefono_cliente"
+            style="width: 100%"
+            [class.ng-invalid]="
+              clienteForm.controls['telefono_cliente'].invalid &&
+              clienteForm.controls['telefono_cliente'].touched
+            "
+            maxlength="9"
+          />
+          <div
+            *ngIf="
+              clienteForm.controls['telefono_cliente'].invalid &&
+              clienteForm.controls['telefono_cliente'].touched
+            "
+            class="ui-message ui-messages-error"
+          >
+            <span class="ui-message-text"
+              >El teléfono debe ser un número entero de 9 dígitos.</span
+            >
+          </div>
         </div>
       </div>
-    </div>
-    <p-footer>
-      <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button type="button" pButton icon="fa fa-check" (click)="save()" label="Guardar"></button>
+      <br />
+      <div class="ui-g-12">
+        <button
+          pButton
+          type="button"
+          label="{{ isNewCliente ? 'Guardar' : 'Actualizar' }}"
+          icon="pi pi-check"
+          (click)="saveOrUpdate()"
+          [disabled]="clienteForm.invalid"
+        ></button>
       </div>
-    </p-footer>
+    </form>
   </p-dialog>
-    
-    
-  </div>
-  
-  <footer><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></footer>
-  
+</div>
+
+<footer><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></footer>
