@@ -26,6 +26,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { TagModule } from 'primeng/tag';
 import { VentaComponent } from './venta/venta.component'
+import { authInterceptorProviders } from './service/auth.interceptor';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.component';
+import { NavbarComponent } from './Componet/navbar/navbar.component';
+import { SidebarModule } from 'primeng/sidebar';
+import {CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TieredMenuModule } from 'primeng/tieredmenu';
 
 
 @NgModule({
@@ -36,11 +43,15 @@ import { VentaComponent } from './venta/venta.component'
     ProveedorComponent,
     ProductoComponent,
     LoginComponent,
-    VentaComponent
+    VentaComponent,
+    DashboardComponent,
+    UserDashboardComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SidebarModule,
     HttpClientModule,
     TagModule,
     MenuModule,
@@ -58,11 +69,14 @@ import { VentaComponent } from './venta/venta.component'
     ButtonModule,
     MenubarModule,
     DialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    TieredMenuModule
   ],
   providers: [
-    [MessageService]
+    [MessageService,
+    authInterceptorProviders]
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

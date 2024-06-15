@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Venta } from '../Model/Venta';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { VentaService } from '../service/venta.service';
 import { DetalleVenta } from '../Model/DetalleVenta';
 
@@ -21,22 +21,20 @@ export class VentaComponent implements OnInit {
   isNewProveedor = false;
   detalleCols: any[] = [];
 
-  ventaForm: FormGroup;
+  ventaForm = new FormGroup({
+    idEmp: new FormControl(),
+    dniCli: new FormControl(),
+    productoCantidadList: new FormControl(),
+  });
 
   selectedDetalleVenta: DetalleVenta | null = null;
 
   constructor(
-    private formBuilder: FormBuilder,
     private ventaService: VentaService,
     private messageService: MessageService,
     confirmationService: ConfirmationService
   ) {
     this.confirmationService = confirmationService;
-    this.ventaForm = this.formBuilder.group({
-      idEmp: [null, Validators.required],
-      dniCli: [null, Validators.required],
-      productoCantidadList: [null, Validators.required]
-    });
   }
 
   ngOnInit() {
@@ -79,6 +77,10 @@ export class VentaComponent implements OnInit {
     }
   }
   
+  
+  
+  
+
   getColumnValue(object: any, field: string): any {
     const fields = field.split('.');
     let value = object;
@@ -89,7 +91,7 @@ export class VentaComponent implements OnInit {
   }
   
   showSaveDialog(): void {
-    this.displaySaveDialog = true;
+    // Implementa la lógica para mostrar el diálogo de guardado
   }
 
   getAll() {
@@ -105,7 +107,10 @@ export class VentaComponent implements OnInit {
   }
 
   getDetalleVentaOptions(venta: Venta): any[] {
+    // Obtener los detalles de venta de la venta actual
     const detallesVenta = venta?.detallesVenta || [];
+    
+    // Crear las opciones para el menú desplegable
     const options = detallesVenta.map(detalle => ({
       label: `${detalle?.cantidad} - ${detalle?.precio_producto}`,
       value: detalle
@@ -114,74 +119,4 @@ export class VentaComponent implements OnInit {
     return options;
   }
   
-  saveVenta() {
-    if (this.ventaForm.invalid) {
-      this.ventaForm.markAllAsTouched();
-      return;
-    }
-
-    const idEmp = this.ventaForm.get('idEmp')?.value;
-    const dniCli = this.ventaForm.get('dniCli')?.value;
-    const productoCantidadList = this.ventaForm.get('productoCantidadList')?.value;
-
-    console.log('Datos a enviar al backend:');
-    console.log('idEmp:', idEmp);
-    console.log('dniCli:', dniCli);
-    console.log('productoCantidadList:', productoCantidadList);
-
-    if (productoCantidadList) {
-      const detallesVenta: DetalleVenta[] = productoCantidadList.split(';').map((item: string) => {
-        const [productoId, cantidad] = item.split(',');
-        const detalleVenta: DetalleVenta = {
-          id_dventa: null,
-          venta: null,
-          producto: {
-            id_producto: null
-          },
-          cantidad: +cantidad,
-          precio_producto: null,
-          subTotal: null,
-          igv: null,
-          totalVenta: null
-        };
-        return detalleVenta;
-      });
-
-      const venta: Venta = new Venta(
-        null,
-        null,
-        idEmp,
-        dniCli,
-        detallesVenta,
-        null
-      );
-
-      this.ventaService.save(venta).subscribe(
-        (result: any) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Venta registrada.'
-          });
-          this.displaySaveDialog = false;
-          this.ventaForm.reset();
-          window.location.reload();
-        },
-        (error) => {
-          console.log(error);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Ocurrió un error al guardar la venta.'
-          });
-        }
-      );
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'La lista de productos y cantidades es requerida.'
-      });
-    }
-  }
 }

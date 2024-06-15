@@ -23,10 +23,10 @@
   <ng-template pTemplate="body" let-empleado let-columns="columns">
     <tr>
       <td *ngFor="let col of columns">
-        <ng-container *ngIf="col.field !== 'contrasena_empleado'">
+        <ng-container *ngIf="col.field !== 'contrasena'">
           {{ empleado[col.field] }}
         </ng-container>
-        <ng-container *ngIf="col.field === 'contrasena_empleado'">
+        <ng-container *ngIf="col.field === 'contrasena'">
           <span *ngIf="!empleado.showPassword">********</span>
           <span *ngIf="empleado.showPassword">{{ empleado[col.field] }}</span>
         </ng-container>
@@ -38,14 +38,12 @@
               pRipple
               icon="pi pi-pencil"
               class="p-button-rounded p-button-success mr-2"
-              (click)="editarEmpleado(empleado)"
             ></button>
             <button
               pButton
               pRipple
               icon="pi pi-trash"
               class="p-element p-button-rounded p-button-warning p-button p-component p-button-icon-only"
-              (click)="deleteEmpleado(empleado.id_empleado)"
             ></button>
           </td>
         </tr>
@@ -194,7 +192,6 @@
             type="button"
             pButton
             icon="fa fa-check"
-            (click)="saveOrUpdate()"
             label="{{ isNewEmpleado ? 'Guardar' : 'Actualizar' }}"
             [disabled]="empleadoForm.invalid"
           ></button>

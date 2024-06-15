@@ -10,70 +10,60 @@ export class LoginService {
 
   private myAppUrl: string = environment.endpoint;
 
+ 
   public loginStatusSubject = new Subject<boolean>();
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.getToken()}`
-    })
-  };
 
+  constructor(private http: HttpClient) { }
 
-  constructor(private http:HttpClient) { }
-
-  //generamos el token
   public generateToken(loginData: any): Observable<any> {
     return this.http.post<any>(`${this.myAppUrl}login`, loginData);
   }
-  
-  
-  public getCurrentUser(){
-    return this.http.get(`${this.myAppUrl}actual-usuario`);
+
+  public getCurrentUser(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.getToken()}`
+      })
+    };
+
+    return this.http.get(`${this.myAppUrl}actual-usuario`, httpOptions);
   }
 
-  //iniciamos sesión y establecemos el token en el localStorage
-  public loginUser(token:any){
-    localStorage.setItem('token',token);
+  public loginUser(token: any) {
+    localStorage.setItem('token', token);
     return true;
   }
 
-  public isLoggedIn(){
+  public isLoggedIn() {
     let tokenStr = localStorage.getItem('token');
-    if(tokenStr == undefined || tokenStr == '' || tokenStr == null){
-      return false;
-    }else{
-      return true;
-    }
+    return !!tokenStr;
   }
 
-  //cerramos sesion y eliminamos el token del localStorage
-  public logout(){
-    localStorage.clear();
+  public logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem
     return true;
   }
 
-  //obtenemos el token
-  public getToken(){
+  public getToken() {
     return localStorage.getItem('token');
   }
 
-  public setUser(user:any){
+  public setUser(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
-  public getUser(){
+  public getUser() {
     let userStr = localStorage.getItem('user');
-    if(userStr != null){
-      return JSON.parse(userStr);
-    }else{
-      this.logout();
-      return null;
-    }
+    return userStr ? JSON.parse(userStr) : null;
   }
 
-  public getUserRole(){
+  public getUserRole() {
     let user = this.getUser();
-    return user.authorities[0].authority;
+    return user?.roles?.length > 0 ? user.roles[0].name : null;
   }
+  
+  
 
 }

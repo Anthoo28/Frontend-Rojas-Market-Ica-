@@ -13,7 +13,7 @@ export class EmpleadoService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    return this.http.get(this.baseUrl + "/lista");
+    return this.http.get(this.baseUrl + "/list");
   }
 
   save(empleado: Empleado): Observable<any> {

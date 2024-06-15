@@ -1,0 +1,17 @@
+<p-sidebar [(visible)]="isSidebarVisible" [showCloseIcon]="true">
+    <h2><img src="./assets/rojas (1).png" style="border-radius: 50%; margin-right: 10px;" width="50px"/> Rojas Market</h2>
+    <app-sidebar></app-sidebar>
+  </p-sidebar>
+  
+  <div class="main-content">
+    <p-menubar [model]="items">
+      <ng-template pTemplate="end">
+        <p-tieredMenu [model]="menuItems"></p-tieredMenu>
+      </ng-template>
+    </p-menubar>
+  
+    <h1>Bienvenido al panel de Empleado</h1>
+  
+    <router-outlet></router-outlet>
+  </div>
+  

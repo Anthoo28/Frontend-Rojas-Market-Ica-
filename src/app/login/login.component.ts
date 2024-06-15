@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { EmpleadoService } from '../service/empleado.service';
 import { Router } from '@angular/router';
@@ -9,7 +14,7 @@ import { Toast } from 'primeng/toast';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
@@ -22,7 +27,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private loginService: LoginService,
     private messageService: MessageService,
-    private router: Router,
+    private router: Router
   ) {
     this.form = this.fb.group({
       correo: [''],
@@ -37,39 +42,54 @@ export class LoginComponent implements OnInit {
       correo: this.form.value.correo,
       contrasena: this.form.value.contrasena,
     };
-    console.log('Datos enviados al backend:', this.loginData);
-  
-    this.loginService.generateToken(this.loginData).subscribe({
-      next: (data: any) => {
-        
+
+    this.loginService.generateToken(this.loginData).subscribe(
+      (data: any) => {
         this.loginService.loginUser(data.token);
-        this.loginService.getCurrentUser().subscribe({
-          next: (user: any) => {
+        console.log('Token guardado en localStorage:', localStorage.getItem('token'));
+
+        this.loginService.getCurrentUser().subscribe(
+          (user: any) => {
+            console.log('Usuario actual:', user);
+            console.log('Token generado:', data.token);
             this.loginService.setUser(user);
-            if (this.loginService.getUserRole() == 'ADMIN') {
-              //dashboard admin
-              this.router.navigate(['dashboard']);
-              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Bienvenido' });
+
+            const userRole = this.loginService.getUserRole();
+            console.log('Rol del usuario:', userRole);
+
+            if (userRole === 'ADMIN') {
+              this.router.navigate(['/admin']);
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Bienvenido',
+              });
               this.loginService.loginStatusSubject.next(true);
-            } else if (this.loginService.getUserRole() == 'EMPLEADO') {
-              //user principal
-              this.router.navigate(['principal']);
-              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Logeo Exitoso' });
+            } else if (userRole === 'EMPLEADO') {
+              this.router.navigate(['/user-dashboard']);
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Logeo Exitoso',
+              });
               this.loginService.loginStatusSubject.next(true);
             } else {
-              this.router.navigate(['login']);
+              this.router.navigate(['/login']);
             }
           },
-          error: (e) => {
-          },
+          (error: any) => {
+            console.log('Error al obtener el usuario actual:', error);
+          }
+        );
+      },
+      (error: any) => {
+        console.log('Error al generar el token:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Credenciales inválidas',
         });
-      },
-      error: (e) => {
-        console.log('Error al generar el token:', e);
-        console.log('Detalles del error:', e.error);
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Detalles invalidos' });
-      },
-    });
+      }
+    );
   }
-  
 }

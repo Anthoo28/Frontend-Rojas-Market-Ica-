@@ -44,14 +44,14 @@
   letter-spacing: -0.01em;
   text-decoration: none;
   list-style: none;
-  color: #8711c1;
+  color: #0000;
 }
 .login-reg-txt li {
   list-style: none;
   margin: 10px;
 }
 .active {
-  border-color: #8711c1;
+  border-color: #a7a4a4;
 }
 .login-reg-txt li .des {
   font-family: "PT Sans";
@@ -127,6 +127,18 @@
   .row-footer {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+.input input {
+  background-color: transparent;
+  text-emphasis-color: #0000;
+   /* Color de fondo blanco */
+}
+
+
+.custom-button {
+  background-color: #a7a4a4; /* Color de fondo gris */
+  color: #ffffff;
+  border-color: #a7a4a4; /* Color del texto blanco */
 }
 
 @media (min-width: 768px) {

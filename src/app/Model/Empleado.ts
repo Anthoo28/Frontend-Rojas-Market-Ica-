@@ -1,10 +1,16 @@
-export class Empleado {
-    constructor(
-      public id_empleado: number|null,
-     public cargo: string|null,
-      public fulldate_empleado: string | null,
-      public edad_empleado: number|null,
-      public correo_empleado: string |null,
-      public contrasena_empleado: string |null
-    ) {}
-  }
+import { ERole } from "./Rol";
+
+
+export interface Empleado {
+  id: number;
+  fulldate: string | null;
+  correo: string;
+  contrasena: string;
+  username: string | null;
+  roles: Rol[];
+}
+
+export interface Rol {
+  id: number;
+  name: ERole;
+}
