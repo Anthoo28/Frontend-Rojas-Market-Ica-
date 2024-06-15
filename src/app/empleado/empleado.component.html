@@ -1,50 +1,45 @@
-<br><br><br><br>
+
 <div class="ui-g">
   <p-toast></p-toast>
   <p-panel header="Empleados" [style]="{ width: '70%', margin: '0 auto' }">
     <div style="margin-bottom: 20px">
       <p-menubar [model]="items"></p-menubar>
+      <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success"
+      (click)="showSaveDialog(false)">Nuevo Empleado</button>
     </div>
-<p-table
-  [value]="empleados"
-  [columns]="cols"
-  selectionMode="single"
-  dataKey="id_empleado"
-  [rows]="10"
->
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-      <th *ngFor="let col of columns">
-        {{ col.header }}
-      </th>
-      <th></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-empleado let-columns="columns">
-    <tr>
-      <td *ngFor="let col of columns">
-        <ng-container *ngIf="col.field !== 'contrasena'">
-          {{ empleado[col.field] }}
-        </ng-container>
-        <ng-container *ngIf="col.field === 'contrasena'">
-          <span *ngIf="!empleado.showPassword">********</span>
-          <span *ngIf="empleado.showPassword">{{ empleado[col.field] }}</span>
-        </ng-container>
-      </td>
-      <td>
-        
-            <button
-              pButton
-              pRipple
-              icon="pi pi-pencil"
-              class="p-button-rounded p-button-success mr-2"
-            ></button>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-trash"
-              class="p-element p-button-rounded p-button-warning p-button p-component p-button-icon-only"
-            ></button>
+    <p-table
+      [value]="empleados"
+      [columns]="cols"
+      selectionMode="single"
+      dataKey="id_empleado"
+      [rows]="10"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-empleado let-columns="columns">
+        <tr [pSelectableRow]="empleado">
+          <td *ngFor="let col of columns">
+            <ng-container *ngIf="col.field !== 'contrasena'">
+              {{ empleado[col.field] }}
+            </ng-container>
+            <ng-container *ngIf="col.field === 'contrasena'">
+              <span *ngIf="!showPassword">********</span>
+              <span *ngIf="showPassword">{{ empleado[col.field] }}</span>
+            </ng-container>
+          </td>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+              (click)="editEmpleado(empleado)"></button>
+              <button pButton pRipple icon="pi pi-trash" class="p-element p-button-rounded p-button-warning p-button p-component p-button-icon-only" 
+              (click)="deleteEmpleado(empleado)"></button>
+              <button pButton pRipple icon="{{ showPassword ? 'pi pi-eye-slash' : 'pi pi-eye' }}"
+                  (click)="togglePasswordVisibility()" class="p-button-rounded p-button-info"></button>
           </td>
         </tr>
       </ng-template>
@@ -67,13 +62,8 @@
               [style]="{ width: '100%' }"
             ></p-dropdown>
 
-            <div
-              *ngIf="
-                empleadoForm.controls.cargo.invalid &&
-                empleadoForm.controls.cargo.touched
-              "
-              class="ui-message ui-messages-error"
-            >
+            <div *ngIf="empleadoForm.controls.cargo.invalid && empleadoForm.controls.cargo.touched"
+              class="ui-message ui-messages-error">
               Cargo es requerido.
             </div>
           </div>
@@ -81,120 +71,66 @@
 
         <div class="ui-g-12">
           <div class="ui-g-4">
-            <label for="fulldate_empleado">Nombres Completos</label>
+            <label for="fulldate">Nombres Completos</label>
           </div>
           <div class="ui-g-8">
-            <input
-              pInputText
-              id="fulldate_empleado"
-              formControlName="fulldate_empleado"
-              style="width: 100%"
-              [class.ng-invalid]="
-                empleadoForm.controls['fulldate_empleado'].invalid &&
-                empleadoForm.controls['fulldate_empleado'].touched
-              "
-            />
-            <div
-              *ngIf="
-                empleadoForm.controls.fulldate_empleado.invalid &&
-                empleadoForm.controls.fulldate_empleado.touched
-              "
-              class="ui-message ui-messages-error"
-            >
+            <input pInputText id="fulldate" formControlName="fulldate" style="width: 100%"
+              [class.ng-invalid]="empleadoForm.controls['fulldate'].invalid && empleadoForm.controls['fulldate'].touched" />
+            <div *ngIf="empleadoForm.controls.fulldate.invalid && empleadoForm.controls.fulldate.touched"
+              class="ui-message ui-messages-error">
               Nombre completo es requerido.
             </div>
           </div>
         </div>
         <div class="ui-g-12">
           <div class="ui-g-4">
-            <label for="edad_empleado">Edad</label>
+            <label for="edad">Edad</label>
           </div>
           <div class="ui-g-8">
-            <input
-              pInputText
-              id="edad_empleado"
-              formControlName="edad_empleado"
-              style="width: 100%"
-              [class.ng-invalid]="
-                empleadoForm.controls['edad_empleado'].invalid &&
-                empleadoForm.controls['edad_empleado'].touched
-              "
-            />
-            <div
-              *ngIf="
-                empleadoForm.controls.edad_empleado.invalid &&
-                empleadoForm.controls.edad_empleado.touched
-              "
-              class="ui-message ui-messages-error"
-            >
+            <input pInputText id="edad" formControlName="edad" style="width: 100%"
+              [class.ng-invalid]="empleadoForm.controls['edad'].invalid && empleadoForm.controls['edad'].touched" />
+            <div *ngIf="empleadoForm.controls.edad.invalid && empleadoForm.controls.edad.touched"
+              class="ui-message ui-messages-error">
               Edad es requerida.
             </div>
           </div>
         </div>
         <div class="ui-g-12">
           <div class="ui-g-4">
-            <label for="correo_empleado">Correo Electrónico</label>
+            <label for="correo">Correo Electrónico</label>
           </div>
           <div class="ui-g-8">
-            <input
-              pInputText
-              id="correo_empleado"
-              formControlName="correo_empleado"
-              style="width: 100%"
-              [class.ng-invalid]="
-                empleadoForm.controls['correo_empleado'].invalid &&
-                empleadoForm.controls['correo_empleado'].touched
-              "
-            />
-            <div
-              *ngIf="
-                empleadoForm.controls.correo_empleado.invalid &&
-                empleadoForm.controls.correo_empleado.touched
-              "
-              class="ui-message ui-messages-error"
-            >
+            <input pInputText id="correo" formControlName="correo" style="width: 100%"
+              [class.ng-invalid]="empleadoForm.controls['correo'].invalid && empleadoForm.controls['correo'].touched" />
+            <div *ngIf="empleadoForm.controls.correo.invalid && empleadoForm.controls.correo.touched"
+              class="ui-message ui-messages-error">
               Correo electrónico es requerido.
             </div>
           </div>
         </div>
         <div class="ui-g-12">
           <div class="ui-g-4">
-            <label for="contrasena_empleado">Contraseña</label>
+            <label for="contrasena">Contraseña</label>
           </div>
           <div class="ui-g-8">
-            <p-password
-              pPassword
-              id="contrasena_empleado"
-              [class.ng-invalid]="
-                empleadoForm.controls['contrasena_empleado'].invalid &&
-                empleadoForm.controls['contrasena_empleado'].touched
-              "
-              formControlName="contrasena_empleado"
-              class="ui-password"
-              [feedback]="false"
-              required
-            ></p-password>
-            <div
-              *ngIf="
-                empleadoForm.controls.contrasena_empleado.invalid &&
-                empleadoForm.controls.contrasena_empleado.touched
-              "
-              class="ui-message ui-messages-error"
-            >
-              Contraseña es requerida.
+            <div class="ui-g">
+              <div class="ui-g-10">
+                <p-password pPassword id="contrasena"
+                  [class.ng-invalid]="empleadoForm.controls['contrasena'].invalid && empleadoForm.controls['contrasena'].touched"
+                  formControlName="contrasena" class="ui-password" [feedback]="false" required></p-password>
+                <div *ngIf="empleadoForm.controls.contrasena.invalid && empleadoForm.controls.contrasena.touched"
+                  class="ui-message ui-messages-error">
+                  Contraseña es requerida.
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <p-footer>
-        <div class="ui-dialog-buttonpane ui-helper-clearfix">
-          <button
-            type="button"
-            pButton
-            icon="fa fa-check"
-            label="{{ isNewEmpleado ? 'Guardar' : 'Actualizar' }}"
-            [disabled]="empleadoForm.invalid"
-          ></button>
+        <div class="ui-g-12">
+          <button pButton type="button" label="{{ isNewEmpleado ? 'Guardar' : 'Actualizar' }}" icon="pi pi-check"
+            (click)="saveOrUpdate()" [disabled]="empleadoForm.invalid"></button>
         </div>
       </p-footer>
     </form>

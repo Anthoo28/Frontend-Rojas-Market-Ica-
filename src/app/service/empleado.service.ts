@@ -8,6 +8,9 @@ import { Empleado } from '../Model/Empleado';
   providedIn: 'root'
 })
 export class EmpleadoService {
+  getById(empleadoIdLogueado: any) {
+    throw new Error('Method not implemented.');
+  }
   baseUrl: string = "http://localhost:4940/empleado";
 
   constructor(private http: HttpClient) { }
@@ -36,6 +39,7 @@ export class EmpleadoService {
 
 
   delete(id: number): Observable<any> {
+    console.log("Empleado ID a eliminar:", id);
     return this.http.delete(this.baseUrl + "/eliminar/"+id);
   }
 

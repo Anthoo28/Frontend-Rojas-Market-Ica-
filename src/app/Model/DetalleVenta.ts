@@ -1,14 +1,10 @@
 import { Producto } from "./Producto";
-import { Venta } from "./Venta";
 
 export interface DetalleVenta {
-    id_dventa: number;
-    venta: Venta;
-    producto: Producto;
-    cantidad: number;
-    precio_producto: number;
-    subTotal: number;
-    igv: number;
-    totalVenta: number;
-  }
-  
+  id_dventa: number | null;
+  cantidad: number;
+  producto: Producto | null;
+  id_producto: number | null; // Agregar el campo id_producto aquí
+  nombre_producto: string;
+}
+

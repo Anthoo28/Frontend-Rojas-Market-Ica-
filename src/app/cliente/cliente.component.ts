@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Cliente } from '../Model/Cliente';
 import { ClienteService } from '../service/cliente.service';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-cliente',

@@ -63,7 +63,11 @@ export class LoginService {
     let user = this.getUser();
     return user?.roles?.length > 0 ? user.roles[0].name : null;
   }
-  
-  
+
+  public getLoggedEmployeeName(): string | null {
+    const user = this.getUser();
+    // Asegúrate de que el objeto "user" no sea nulo y tenga la propiedad "nombre_empleado"
+    return user && user.nombre_empleado ? user.nombre_empleado : null;
+  }
 
 }

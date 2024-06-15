@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import { Observable, map, shareReplay } from 'rxjs';
 import { LoginService } from 'src/app/service/login.service';
-import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
-export class NavbarComponent implements OnInit{
+export class DashboardComponent implements OnInit{
   menuItems: MenuItem[] = [];
   items: MenuItem[] = [];
   isLoggedIn = false;
@@ -63,3 +63,5 @@ export class NavbarComponent implements OnInit{
     window.location.reload();
   }
 }
+
+

@@ -1,16 +1,16 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
 import { Observable, map, shareReplay } from 'rxjs';
 import { LoginService } from 'src/app/service/login.service';
+import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-dashboard-empleado',
+  templateUrl: './dashboard-empleado.component.html',
+  styleUrls: ['./dashboard-empleado.component.css']
 })
-export class DashboardComponent implements OnInit{
+export class DashboardEmpleadoComponent {
   menuItems: MenuItem[] = [];
   items: MenuItem[] = [];
   isLoggedIn = false;
@@ -34,17 +34,13 @@ export class DashboardComponent implements OnInit{
       {
         label: this.login.getUser()?.username || '',
         items: [
-          { label: 'Logout', icon: 'pi pi-fw pi-power-off', command: () => this.logout() }
+          { label: 'Cerrar Sesión', icon: 'pi pi-fw pi-power-off', command: () => this.logout() }
         ]
       }
     ];
   
     this.items = [
-      { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: '/home' },
       { label: 'Cliente', icon: 'pi pi-fw pi-users', routerLink: '/cliente' },
-      { label: 'Empleado', icon: 'pi pi-fw pi-id-card', routerLink: '/empleado' },
-      { label: 'Producto', icon: 'pi pi-fw pi-box', routerLink: '/producto' },
-      { label: 'Proveedor', icon: 'pi pi-fw pi-truck', routerLink: '/proveedor' },
       { label: 'Venta', icon: 'pi pi-fw pi-cart-plus', routerLink: '/venta' }
     ];
 
@@ -63,5 +59,3 @@ export class DashboardComponent implements OnInit{
     window.location.reload();
   }
 }
-
-

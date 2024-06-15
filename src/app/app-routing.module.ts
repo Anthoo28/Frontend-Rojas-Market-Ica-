@@ -7,48 +7,21 @@ import { LoginComponent } from './login/login.component';
 import { VentaComponent } from './venta/venta.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { AdminGuard } from './service/admin.guard';
-import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { DashboardComponent } from './admin/dashboard-admin/dashboard.component';
 import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.component';
 import { EmpleadoGuard } from './service/empleado.guard';
+import { SuperGuard } from './service/super.guard';
 
 const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent,
-    pathMatch: 'full',
-  },
-  {
-    path: 'admin',
-    component: DashboardComponent,
-    pathMatch: 'full',
-    canActivate: [AdminGuard],
-  },
-  {
-    path: 'user-dashboard',
-    component: UserDashboardComponent,
-    pathMatch: 'full',
-    canActivate: [EmpleadoGuard],
-  },
-  { 
-    path: 'empleado', 
-    component: EmpleadoComponent, 
-  canActivate: [AdminGuard] 
-},
-  { 
-    path: 'cliente',
-   component: ClienteComponent,
-   canActivate: [AdminGuard,EmpleadoGuard]
-   },
-  {
-    path: 'proveedor',
-    component: ProveedorComponent,
-    canActivate: [AdminGuard],
-  },
-  { path: 'producto',
-   component: ProductoComponent, 
-   canActivate: [AdminGuard] },
-
-  { path: 'venta', component: VentaComponent,canActivate: [AdminGuard] },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'admin', component: DashboardComponent, canActivate: [AdminGuard] },
+  { path: 'user-dashboard', component: UserDashboardComponent, canActivate: [EmpleadoGuard] },
+  { path: 'empleado', component: EmpleadoComponent, canActivate: [AdminGuard] },
+  { path: 'cliente', component: ClienteComponent, canActivate: [SuperGuard] },
+  { path: 'proveedor', component: ProveedorComponent, canActivate: [AdminGuard] },
+  { path: 'producto', component: ProductoComponent, canActivate: [AdminGuard] },
+  { path: 'venta', component: VentaComponent, canActivate: [SuperGuard] },
 ];
 
 @NgModule({

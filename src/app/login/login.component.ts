@@ -1,16 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { EmpleadoService } from '../service/empleado.service';
 import { Router } from '@angular/router';
-import { Table } from 'primeng/table';
 import { LoginService } from '../service/login.service';
-import { Toast } from 'primeng/toast';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -57,25 +50,23 @@ export class LoginComponent implements OnInit {
             const userRole = this.loginService.getUserRole();
             console.log('Rol del usuario:', userRole);
 
-            if (userRole === 'ADMIN') {
-              this.router.navigate(['/admin']);
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Bienvenido',
-              });
-              this.loginService.loginStatusSubject.next(true);
-            } else if (userRole === 'EMPLEADO') {
-              this.router.navigate(['/user-dashboard']);
-              this.messageService.add({
-                severity: 'success',
-                summary: 'Success',
-                detail: 'Logeo Exitoso',
-              });
-              this.loginService.loginStatusSubject.next(true);
-            } else {
-              this.router.navigate(['/login']);
-            }
+            // Mostrar mensaje en el Toast cuando el inicio de sesión es exitoso
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Bienvenido',
+            });
+
+            // Retraso de 2 segundos antes de redirigir al usuario
+            setTimeout(() => {
+              if (userRole === 'ADMIN') {
+                this.router.navigate(['/admin']);
+              } else if (userRole === 'EMPLEADO') {
+                this.router.navigate(['/user-dashboard']);
+              } else {
+                this.router.navigate(['/login']);
+              }
+            }, 2000); // 2000 milisegundos = 2 segundos
           },
           (error: any) => {
             console.log('Error al obtener el usuario actual:', error);

@@ -1,13 +1,15 @@
 import { DetalleVenta } from "./DetalleVenta";
+import { Empleado } from "./Empleado";
+import { Cliente } from "./Cliente"; // Importar la clase Cliente
 
-export class Venta{
-    constructor(
-       public id_venta: number|null,
-       public fechaVenta: Date|null,
-       public empleado:{
-         id_emp: number|null},
-        public dni_cli: number|null,
-         public detallesVenta: DetalleVenta[],
-         public total:number|null
-    ){}
+export class Venta {
+  idVenta?: number;
+  fechaVenta?: Date;
+  empleado?: Empleado;
+  cliente?: Cliente;
+  estado?: string;
+  total?: number;
+  
+  cantidad?: number;
+  detallesVenta: DetalleVenta[] = []; // Add the detallesVenta property
 }

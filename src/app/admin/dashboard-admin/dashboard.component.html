@@ -1,0 +1,81 @@
+<p-sidebar [(visible)]="isSidebarVisible" [showCloseIcon]="true">
+  <h2><img src="./assets/rojas (1).png" style="border-radius: 50%; margin-right: 10px;" width="50px" /> Rojas Market
+  </h2>
+  <app-sidebar></app-sidebar>
+</p-sidebar>
+
+<div class="main-content">
+  <p-menubar [model]="items">
+    <ng-template pTemplate="end">
+      <p-tieredMenu [model]="menuItems"></p-tieredMenu>
+    </ng-template>
+  </p-menubar>
+
+  <h1 style="display: flex; flex-direction: column; align-items: center;">
+    Hola, administrador<span style="color: rgb(255, 0, 0);">{{ user?.correo }}</span>
+  </h1>
+  
+  <div style="display: flex; justify-content: space-between;">
+    <p-card header="Clientes"
+      [style]="{'width': '25rem', 'margin-bottom': '2em', 'margin-left': '2em', 'margin-top': '2em', 'margin-right': '2em'}">
+      <ng-template pTemplate="header">
+        <img alt="Card" src="https://especializate.usat.edu.pe/wp-content/uploads/2021/12/comportamientos-empresa-cliente.jpg">
+      </ng-template>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam
+        deserunt
+        quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
+      </p>
+      <p-button label="Acceder" icon="pi pi-angle-right" [routerLink]="['/cliente']"></p-button>
+    </p-card>
+
+    <p-card header="Empleado"
+      [style]="{'width': '25rem', 'margin-bottom': '2em', 'margin-left': '2em', 'margin-top': '2em', 'margin-right': '2em'}">
+      <ng-template pTemplate="header">
+        <img alt="Card" src="https://economia3.com/wp-content/uploads/2021/02/como-retener-a-un-empleado-con-talento-noticias-infocif.jpg" class="img-fluid">
+      </ng-template>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam
+        deserunt
+        quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
+      </p>
+      <p-button label="Acceder" icon="pi pi-angle-right" [routerLink]="['/empleado']"></p-button>
+    </p-card>
+
+    <p-card header="Producto"
+      [style]="{'width': '25rem', 'margin-bottom': '2em', 'margin-left': '2em', 'margin-top': '2em', 'margin-right': '2em'}">
+      <ng-template pTemplate="header">
+        <img alt="Card" src="https://concepto.de/wp-content/uploads/2019/11/producto-e1572738593909.jpg">
+      </ng-template>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam
+        deserunt
+        quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
+      </p>
+      <p-button label="Acceder" icon="pi pi-angle-right" [routerLink]="['/producto']"></p-button>
+    </p-card>
+
+    <p-card header="Proveedor"
+      [style]="{'width': '25rem', 'margin-bottom': '2em', 'margin-left': '2em', 'margin-top': '2em', 'margin-right': '2em'}">
+      <ng-template pTemplate="header">
+        <img alt="Card" src="https://www.esan.edu.pe/images/blog/2021/12/17/1500x844-requisitos-proveedores-17-12-2021.jpg">
+      </ng-template>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam
+        deserunt
+        quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
+      </p>
+      <p-button label="Proveedores" icon="pi pi-fw pi-truck" routerLink="/proveedor"></p-button>
+    </p-card>
+  </div>
+  <div style="display: flex; justify-content: space-between;">
+    <p-card header="Venta"
+      [style]="{'width': '25rem', 'margin-bottom': '2em', 'margin-left': '2em', 'margin-top': '2em', 'margin-right': '2em'}">
+      <ng-template pTemplate="header">
+        <img alt="Card" src="https://conceptodefinicion.de/wp-content/uploads/2014/02/Venta-2.jpg">
+      </ng-template>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam
+        deserunt
+        quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
+      </p>
+      <p-button label="Acceder" icon="pi pi-angle-right" [routerLink]="['/venta']"></p-button>
+    </p-card>
+  </div>
+  <router-outlet></router-outlet>
+</div>

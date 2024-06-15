@@ -1,4 +1,4 @@
-<br><br><br><br>
+
 <div class="ui-g">
   <p-toast></p-toast>
   <p-panel header="Productos" [style]="{ width: '70%', margin: '0 auto' }">
@@ -246,15 +246,15 @@
         </div>
       </div>
       <p-footer>
-        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <div class="ui-dialog-buttonpane ui-helper-clearfix"><br>
           <button
             type="button"
             pButton
             icon="fa fa-check"
             (click)="saveOrUpdate()"
             label="{{ isNewProducto ? 'Guardar' : 'Actualizar' }}"
-            [disabled]="productoForm.invalid"
-          ></button>
+            [disabled]="productoForm.invalid">
+        </button>
         </div>
       </p-footer>
     </form>

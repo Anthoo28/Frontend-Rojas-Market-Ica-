@@ -196,7 +196,7 @@ export class ProductoComponent implements OnInit{
     if (!confirmDelete) {
       return;
     }
-
+  
     this.productoService.delete(id).subscribe(
       (result: any) => {
         this.productos = this.productos.filter(
@@ -207,13 +207,15 @@ export class ProductoComponent implements OnInit{
         console.log(error);
       }
     );
+  
     this.messageService.add({
-      severity: 'Error',
-      summary: 'Exito',
+      severity: 'success', // Corregido aquí, debe ser 'success' en lugar de 'Error'
+      summary: 'Éxito',
       detail: 'Producto eliminado.',
-      life: 3000,
+      life: 500,
     });
-    window.location.reload;
+  
+    window.location.reload(); // Agregando los paréntesis aquí
   }
 
 }

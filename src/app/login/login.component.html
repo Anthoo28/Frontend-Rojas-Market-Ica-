@@ -1,32 +1,26 @@
-<div class="contenedor-formulario contenedor">
-  <img src="./assets/rojas (1).png">
-  <form class="formulario" [formGroup]="form" (ngSubmit)="formSubmit()">
-    <div class="texto-title">
-      <ul class="login-reg-txt">
-        <li><a routerLink="/principal/login" class="active">Iniciar sesión</a></li>
-      </ul>
-      <div class="login-reg-line">
-        <hr class="cla active">
-        <hr class="cla des">
+<div class="container">
+  <div class="login-form">
+    <h2 style="color: rgb(0, 0, 0); font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">INICIO DE SESION</h2>
+    <div class="image-container">
+      <img src="https://i.ibb.co/PwhFvMv/logo-rojas.png" alt="Logo" width="200" height="150">
+    </div>    
+    <form [formGroup]="form" (ngSubmit)="formSubmit()">
+      <div class="form-group">
+        <label for="correo"style="color: black;">Correo Electrónico</label>
+        <input type="email" class="form-control" id="correo" formControlName="correo" required>
+        <div *ngIf="form.controls['correo'].invalid && form.controls['correo'].touched"
+          class="error-message">Correo electrónico es requerido.</div>
       </div>
-    </div>
-    <div class="texto-formulario">
-      <h2>Bienvenido</h2>
-    </div>
-    <div class="input mb-4">
-      <input type="text" pInputText placeholder="Digite su nombre de usuario" autocomplete="off" formControlName="correo">
-  
-    </div>
-    <div class="input mb-4">
-      <input type="password" pPassword placeholder="Digite su contraseña" autocomplete="off" formControlName="contrasena">
-
-    </div>
-    <br>
-    <div class="input d-flex">
-      <button pButton type="submit" class="full-width custom-button" label="Iniciar Sesión"></button>
-      <br>
-      <button pButton type="reset" class="full-width custom-button" label="Limpiar"></button>      
-    </div>
-  </form>
+      <div class="form-group">
+        <label for="contrasena"style="color: black;">Contraseña</label>
+        <input type="password" class="form-control" id="contrasena" formControlName="contrasena"
+          required>
+        <div
+          *ngIf="form.controls['contrasena'].invalid && form.controls['contrasena'].touched"
+          class="error-message">Contraseña es requerida.</div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Iniciar sesión</button>
+    </form>
+    <p-toast position="top-right"></p-toast>
+  </div>
 </div>
-

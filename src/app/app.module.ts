@@ -25,14 +25,20 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
 import { TagModule } from 'primeng/tag';
-import { VentaComponent } from './venta/venta.component'
+import { VentaComponent } from './venta/venta.component';
 import { authInterceptorProviders } from './service/auth.interceptor';
-import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { DashboardComponent } from './admin/dashboard-admin/dashboard.component';
 import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.component';
 import { NavbarComponent } from './Componet/navbar/navbar.component';
 import { SidebarModule } from 'primeng/sidebar';
 import {CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { CardModule } from 'primeng/card';
+import { RouterModule } from '@angular/router';
+import { DashboardEmpleadoComponent } from './dashboard-empleado/dashboard-empleado.component';
+import { EmpleadoService } from '../app/service/empleado.service'; // Reemplaza 'empleado.service' con la ruta correcta a tu servicio de empleados.
+import { ClienteService } from './service/cliente.service';
+
 
 
 @NgModule({
@@ -44,14 +50,16 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
     ProductoComponent,
     LoginComponent,
     VentaComponent,
+    NavbarComponent,
     DashboardComponent,
     UserDashboardComponent,
-    NavbarComponent
+    DashboardEmpleadoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SidebarModule,
+    RouterModule,
     HttpClientModule,
     TagModule,
     MenuModule,
@@ -70,11 +78,14 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
     MenubarModule,
     DialogModule,
     BrowserAnimationsModule,
-    TieredMenuModule
+    TieredMenuModule,
+    CardModule
   ],
   providers: [
     [MessageService,
-    authInterceptorProviders]
+    authInterceptorProviders,
+    EmpleadoService, ClienteService],
+    
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
